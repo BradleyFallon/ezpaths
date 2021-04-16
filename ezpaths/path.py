@@ -30,7 +30,7 @@ class Path:
     # return extension
     def ext(self) -> str: return self.split()[1]
     # return filename with or without extension
-    def name(self) -> str: return self.split()[0]
+    def name(self) -> str: return os.path.basename(self.split()[0])
     # return filename with or without extension
     def filename(self) -> str: return os.path.basename(self._path)
 
