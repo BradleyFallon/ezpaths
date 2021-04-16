@@ -44,7 +44,7 @@ print('path_insatall: ', path_insatall)
     path_insatall:  C:\Users\Brad\Anaconda3\envs\stonks\lib\site-packages\ezpaths\__init__.py
     
 
-#### Use the dir method to return the path (type: path) to the parent directory 
+#### Use the <code>.dir()</code> method to return the path (type: path) to the parent directory 
 
 
 ```python
@@ -56,7 +56,7 @@ print('install_dir: ', install_dir)
     install_dir:  C:\Users\Brad\Anaconda3\envs\stonks\lib\site-packages\ezpaths
     
 
-#### The dir method can be used to ascend multiple levels
+#### The <code>.dir()</code> method can be used to ascend multiple levels
 * Use an integer in the dir method arguments to call recursively
 * Since a path object is returned, calls to dir can also be chained
 
@@ -73,7 +73,7 @@ print('libraries_folder_2: ', libraries_folder_2)
     libraries_folder_2:  C:\Users\Brad\Anaconda3\envs\stonks\lib
     
 
-#### To get just the name of the current directory (type: string), use the dirname method
+#### To get just the name of the current directory (type: string), use the <code>.dirname()</code> method
 
 
 ```python
