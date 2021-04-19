@@ -6,39 +6,72 @@ This is intended to make complex one-liners easy to understand without comments.
 """
 
 import os
+import sys
 
 
 class Path:
+
     # create Path object from pathlike string
-    def __init__(self, path_str:str): self._path = os.path.abspath(path_str)
+    def __init__(self, path_str:str=None): 
+        if path_str is None: path_str = os.getcwd()
+        self._path = os.path.abspath(path_str)
+
     # join paths
-    def __add__(self, other): return Path(os.path.join(self._path, str(other)))
+    def __add__(self, other):
+        return Path(os.path.join(self._path, str(other)))
+
     # join paths
-    def __truediv__(self, other): return Path(os.path.join(self._path, str(other)))
+    def __truediv__(self, other):
+        return Path(os.path.join(self._path, str(other)))
+
     # convert to string
-    def __str__(self): return self._path
+    def __str__(self):
+        return self._path
+
     # check if path exists
-    def __bool__(self): return os.path.exists(self._path)
+    def __bool__(self):
+        return os.path.exists(self._path)
+
     # Check if abspath is same as other
-    def __eq__(self, other): return os.path.abspath(self._path) == os.path.abspath(str(other))
+    def __eq__(self, other):
+        return os.path.abspath(self._path) == os.path.abspath(str(other))
+
     # return parent directory object
-    def dir(self, extra=0): return self.dir().dir(extra-1) if extra > 0 else Path(os.path.dirname(self._path))
+    def dir(self, extra=0):
+        return self.dir().dir(extra-1) if extra > 0 else Path(os.path.dirname(self._path))
     # return name of parent directory
-    def dirname(self) -> str: return os.path.basename(str(self.dir()))
+
+    def dirname(self) -> str:
+        return os.path.basename(str(self.dir()))
+    
     # return name and extension separately
-    def split(self) -> (str, str): return os.path.splitext(self._path)
+    def split(self) -> (str, str):
+        return os.path.splitext(self._path)
+    
     # return extension
-    def ext(self) -> str: return self.split()[1]
+    def ext(self) -> str:
+        return self.split()[1]
+    
     # return filename with or without extension
-    def name(self) -> str: return os.path.basename(self.split()[0])
+    def name(self) -> str:
+        return os.path.basename(self.split()[0])
+    
     # return filename with or without extension
-    def filename(self) -> str: return os.path.basename(self._path)
+    def filename(self) -> str:
+        return os.path.basename(self._path)
+    
+    # Append to sys.path
+    def to_sys(self):
+        return sys.path.append(str(self))
+
 
 
 if __name__ == "__main__":
     """
     Tests/Examples
     """
+    path_cwd = Path()
+    print('path_cwd: ', path_cwd)
 
     # Create path objecet from this file path
     path_this = Path(__file__)
