@@ -28,6 +28,10 @@ class Path:
     def __str__(self):
         return self._path
 
+    # represent as string
+    def __repr__(self):
+        return f'<{self}>'
+
     # check if path exists
     def __bool__(self):
         return os.path.exists(self._path)
@@ -42,7 +46,11 @@ class Path:
     # return name of parent directory
 
     def dirname(self) -> str:
-        return os.path.basename(str(self.dir()))
+        # check if is file
+        if self.ext() == '':
+            return self.name()
+        else:
+            return self.dir().name()
     
     # return name and extension separately
     def split(self) -> (str, str):
@@ -62,51 +70,4 @@ class Path:
     
     # Append to sys.path
     def to_sys(self):
-        return sys.path.append(str(self))
-
-
-
-if __name__ == "__main__":
-    """
-    Tests/Examples
-    """
-    path_cwd = Path()
-    print('path_cwd: ', path_cwd)
-
-    # Create path objecet from this file path
-    path_this = Path(__file__)
-    print('path_this: ', path_this)
-
-    # Get parent directory path
-    this_dir = path_this.dir()
-    print('this_dir: ', this_dir)
-
-    # Get parent directory name
-    dirname = path_this.dirname()
-    print('dirname: ', dirname)
-
-    # Go up multiple directories
-    libraries_folder_1 = path_this.dir(2)
-    libraries_folder_2 = path_this.dir().dir().dir()
-    print('libraries_folder_1: ', libraries_folder_1)
-    print('libraries_folder_2: ', libraries_folder_2)
-
-    # Check if same path
-    same = libraries_folder_1 == libraries_folder_2
-    print('same (matching): ', same)
-    same = libraries_folder_1 == this_dir
-    print('same (non-matching): ', same)
-
-    # Check if path exists
-    exists_file = bool(path_this)
-    print('exists_file: ', exists_file)
-    exists_dir = bool(this_dir)
-    print('exists_dir: ', exists_dir)
-
-    # filenames
-    name = path_this.name()
-    print('name: ', name)
-    ext = path_this.ext()
-    print('ext: ', ext)
-    filename = path_this.filename()
-    print('filename: ', filename)
+        return sys.path.insert(0, str(self))
