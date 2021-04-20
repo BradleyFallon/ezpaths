@@ -1,5 +1,5 @@
-# Overview
-
+# EZPATHS: Shorthand path modification
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ### ezpaths
 Python module which provides shorthand methods for frequent os.path one-liners
