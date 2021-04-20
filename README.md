@@ -2,6 +2,7 @@
 ![Tests](https://github.com/Gastropod/ezpaths/actions/workflows/ci.yml/badge.svg)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/ezpaths.svg)](https://pypi.python.org/pypi/ezpaths/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Gastropod/ezpaths/blob/main/LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/Gastropod/ezpaths.svg)](https://GitHub.com/Gastropod/ezpaths/graphs/contributors/)
 
 ### ezpaths
 Python module which provides shorthand methods for frequent os.path one-liners
