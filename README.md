@@ -1,7 +1,7 @@
 # EZPATHS: Shorthand path modification
 ![Tests](https://github.com/Gastropod/ezpaths/actions/workflows/ci.yml/badge.svg)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/ezpaths.svg)](https://pypi.python.org/pypi/ezpaths/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Gastropod/ezpaths/blob/main/LICENSE)
 
 ### ezpaths
 Python module which provides shorthand methods for frequent os.path one-liners
