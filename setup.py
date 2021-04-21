@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name="ezpaths",
     packages=["ezpaths"],
-    version="0.1.1",
+    version="0.1.2",
     license="MIT",
     description="Python module which provides shorthand methods for frequent os.path one-liners.",
     author="Bradley Fallon",
