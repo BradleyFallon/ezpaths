@@ -12,8 +12,9 @@ import sys
 class Path:
 
     # create Path object from pathlike string
-    def __init__(self, path_str:str=None): 
-        if path_str is None: path_str = os.getcwd()
+    def __init__(self, path_str: str = None):
+        if path_str is None:
+            path_str = os.getcwd()
         self._path = os.path.abspath(path_str)
 
     # join paths
@@ -30,7 +31,7 @@ class Path:
 
     # represent as string
     def __repr__(self):
-        return f'<{self}>'
+        return f"<{self}>"
 
     # check if path exists
     def __bool__(self):
@@ -42,32 +43,37 @@ class Path:
 
     # return parent directory object
     def dir(self, extra=0):
-        return self.dir().dir(extra-1) if extra > 0 else Path(os.path.dirname(self._path))
+        return (
+            self.dir().dir(extra - 1)
+            if extra > 0
+            else Path(os.path.dirname(self._path))
+        )
+
     # return name of parent directory
 
     def dirname(self) -> str:
         # check if is file
-        if self.ext() == '':
+        if self.ext() == "":
             return self.name()
         else:
             return self.dir().name()
-    
+
     # return name and extension separately
     def split(self) -> (str, str):
         return os.path.splitext(self._path)
-    
+
     # return extension
     def ext(self) -> str:
         return self.split()[1]
-    
+
     # return filename with or without extension
     def name(self) -> str:
         return os.path.basename(self.split()[0])
-    
+
     # return filename with or without extension
     def filename(self) -> str:
         return os.path.basename(self._path)
-    
+
     # Append to sys.path
     def to_sys(self):
         return sys.path.insert(0, str(self))
