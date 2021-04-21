@@ -1,5 +1,6 @@
 # EZPATHS: Shorthand path modification
 ![Tests](https://github.com/Gastropod/ezpaths/actions/workflows/ci.yml/badge.svg)
+[![codecov](https://codecov.io/gh/Gastropod/ezpaths/branch/main/graph/badge.svg?token=P1OOP0UNVU)](https://codecov.io/gh/Gastropod/ezpaths)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/ezpaths.svg)](https://pypi.python.org/pypi/ezpaths/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Gastropod/ezpaths/blob/main/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/Gastropod/ezpaths.svg)](https://GitHub.com/Gastropod/ezpaths/graphs/contributors/)
