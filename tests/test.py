@@ -19,7 +19,7 @@ class TestPath(unittest.TestCase):
 
     def test_repr(self):
         path = Path()
-        self.assertEqual(repr(path), "<" + str(path) + ">")
+        self.assertEqual(repr(path), "<Path: " + str(path) + ">")
 
     def test_add(self):
         path_a = Path()

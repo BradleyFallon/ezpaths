@@ -18,7 +18,7 @@ class Path:
             path_str = os.getcwd()
         self._path = os.path.abspath(path_str)
 
-    def __add__(self, other) -> Path:
+    def __add__(self, other) -> 'Path':
         """Creates the joined path appending other (RHS) to self.
         Does not modify self. Same as __truediv__.
 
@@ -29,7 +29,7 @@ class Path:
         """
         return Path(os.path.join(self._path, str(other)))
 
-    def __truediv__(self, other) -> Path:
+    def __truediv__(self, other) -> 'Path':
         """Creates the joined path appending other (RHS) to self.
         Does not modify self. Same as __add__.
 
@@ -74,7 +74,7 @@ class Path:
         """
         return os.path.abspath(self._path) == os.path.abspath(str(other))
 
-    def dir(self, extra: int = 0) -> Path:
+    def dir(self, extra: int = 0) -> 'Path':
         """Returns path object targeting parent directory of self.
 
         :param extra: Number of extra levels to ascend recursively, defaults to 0
