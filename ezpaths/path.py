@@ -143,3 +143,15 @@ class Path:
         :rtype: None
         """
         return sys.path.insert(0, str(self))
+
+    def delete(self):
+        """Deletes this file from the disk
+
+        :return: True if the file has been successfully deleted, False otherwise.
+        :rtype: bool
+        """
+        if self:   # TODO: Does this call Path.__bool__() ?
+            os.remove(self._path)
+            return True
+
+        return False
