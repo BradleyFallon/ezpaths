@@ -180,13 +180,13 @@ class Path:
         return True
 
     def copy(self, destination=None, suffix: str="copy"):
-        """Copies this file to the given destination path.
+        """Copies this file/folder to the given destination path.
 
         :param destination: The destination path this file needs to be copied to. If None, a new copy with the suffix is created in the same location.
-        :type destination: Path instance. If str type is provided, Path instance will be created.
+        :type destination: Path, optional
         :param suffix: Suffix of the copied file when the same filename exists in the destination folder. Defaults to "copy".
         :type suffix:
-        :return: Destination Path instance.
+        :return: Path instance of the destination.
         :rtype: Path
         """
         if isinstance(destination, str):
@@ -203,4 +203,31 @@ class Path:
         elif os.path.isdir(self._path):
             dest_path_str = shutil.copytree(self._path, destination._path, copy_function=shutil.copy2)
 
-        return Path(dest_path_str)
+        # Sanity check
+        assert dest_path_str == destination._path
+
+        return destination
+
+    def move(self, destination):
+        """Moves this file or folder to the given destination
+
+        :param destination: Path to be moved to.
+        :type destination: Path.
+        :return: Path instance of the moved file/folder
+        :rtype: Path
+        """
+        if not destination:
+            print("Incorrect destination path provided.")
+            return None
+
+        if isinstance(destination, str):
+            destination = Path(destination)
+
+        # Move the file/folder
+        dest_str_path = shutil.move(self._path, destination._path)
+
+        # Sanity check
+        assert dest_str_path == destination._path
+        self._path = destination._path  # TODO: Is this necessary?
+
+        return destination
