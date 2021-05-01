@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 
 
 class Path:
@@ -144,14 +145,62 @@ class Path:
         """
         return sys.path.insert(0, str(self))
 
-    def delete(self):
+    def delete(self) -> bool:
         """Deletes this file from the disk
 
         :return: True if the file has been successfully deleted, False otherwise.
         :rtype: bool
         """
-        if self:   # TODO: Does this call Path.__bool__() ?
+        if os.path.isfile(self._path):
             os.remove(self._path)
             return True
 
+        elif os.path.isdir(self._path):
+            shutil.rmtree(self._path)
+            return True
+
         return False
+
+    def rename(self, new_name: str) -> bool:
+        """New name for the file or the directory in the path
+
+        :param new_name: New name for the filename.
+        :type new_name: str
+        :return: True if the file has been successfully renamed, False otherwise.
+        :rtype: bool
+        """
+        if not new_name or not isinstance(new_name, str):
+            return False
+
+        self._path = os.path.join(
+            self.dir()._path,
+            "{}{}".format(new_name, self.ext()),
+        )
+
+        return True
+
+    def copy(self, destination=None, suffix: str="copy"):
+        """Copies this file to the given destination path.
+
+        :param destination: The destination path this file needs to be copied to. If None, a new copy with the suffix is created in the same location.
+        :type destination: Path instance. If str type is provided, Path instance will be created.
+        :param suffix: Suffix of the copied file when the same filename exists in the destination folder. Defaults to "copy".
+        :type suffix:
+        :return: Destination Path instance.
+        :rtype: Path
+        """
+        if isinstance(destination, str):
+            destination = Path(destination)
+
+        elif destination is None:
+            destination = Path(self._path)
+            destination.rename("{}_{}".format(destination.name(), suffix))
+
+        # Copy the file/directory
+        if os.path.isfile(self._path):
+            dest_path_str = shutil.copy2(self._path, destination._path)
+
+        elif os.path.isdir(self._path):
+            dest_path_str = shutil.copytree(self._path, destination._path, copy_function=shutil.copy2)
+
+        return Path(dest_path_str)
