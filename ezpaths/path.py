@@ -179,7 +179,7 @@ class Path:
 
         return True
 
-    def copy(self, destination=None, suffix: str="copy"):
+    def copy(self, destination: "Path"=None, suffix: str="copy") -> "Path":
         """Copies this file/folder to the given destination path.
 
         :param destination: The destination path this file needs to be copied to. If None, a new copy with the suffix is created in the same location.
@@ -208,7 +208,7 @@ class Path:
 
         return destination
 
-    def move(self, destination):
+    def move(self, destination: "Path") -> "Path":
         """Moves this file or folder to the given destination
 
         :param destination: Path to be moved to.
@@ -231,3 +231,20 @@ class Path:
         self._path = destination._path  # TODO: Is this necessary?
 
         return destination
+
+    def mkdirs(self) -> "Path":
+        """Creates a directory recursively. That means while making leaf
+        directory if any intermediate-level directory is missing, this
+        method will create them all.
+
+        :return: True if successful, False otherwise.
+        :rtype: bool
+        """
+        try:
+            os.makedirs(self._path)
+            return True
+
+        except OSError:
+            print("Directory already exists!")
+
+        return False
