@@ -213,7 +213,7 @@ class Path:
 
         :param destination: Path to be moved to.
         :type destination: Path.
-        :return: Path instance of the moved file/folder
+        :return: Path instance of the moved file/folder. None if failed.
         :rtype: Path
         """
         if not destination:
@@ -240,11 +240,19 @@ class Path:
         :return: True if successful, False otherwise.
         :rtype: bool
         """
-        try:
+        if not os.path.exists(self._path):
             os.makedirs(self._path)
             return True
 
-        except OSError:
-            print("Directory already exists!")
-
         return False
+
+    def touch(self) -> bool:
+        """Implement the touch feature for this Path
+
+        :return: True always.
+        :rtype: bool
+        """
+        with open(self._path, 'a'):
+            os.utime(self._path, None)
+
+        return True
