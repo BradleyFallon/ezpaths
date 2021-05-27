@@ -57,13 +57,15 @@ class Path:
         """
         return f"<Path: {self}>"
 
+    def exists(self) -> bool: return os.path.exists(self._path)
+
     def __bool__(self) -> bool:
         """Checks if path exists as either a file or directory.
 
         :return: True if exists else False.
         :rtype: bool
         """
-        return os.path.exists(self._path)
+        return self.exists()
 
     def __eq__(self, other) -> bool:
         """Checks if the absolute path of self and other are identical.
@@ -145,6 +147,17 @@ class Path:
         """
         return sys.path.insert(0, str(self))
 
+    def touch(self) -> bool:
+        """Implement the touch feature for this Path
+
+        :return: True always.
+        :rtype: bool
+        """
+        with open(self._path, 'a'):
+            os.utime(self._path, None)
+
+        return True
+
     def delete(self) -> bool:
         """Deletes this file from the disk
 
@@ -169,15 +182,24 @@ class Path:
         :return: True if the file has been successfully renamed, False otherwise.
         :rtype: bool
         """
+        # Check for valid input type 
         if not new_name or not isinstance(new_name, str):
+            raise ValueError("new_name must be a valid string")
+        # Determine extension
+        if "." in new_name:
+            new_name, ext = new_name.split('.', maxsplit=1)
+        else:
+            ext = self.ext()
+        # Create target path
+        target = self.dir() + f"{new_name}{self.ext()}"
+        # attempt to move to target
+        if target.exists():
+            # Seat taken
             return False
-
-        self._path = os.path.join(
-            self.dir()._path,
-            "{}{}".format(new_name, self.ext()),
-        )
-
-        return True
+        else:
+            self._path = target._path
+            self.move(target)
+            return True
 
     def copy(self, destination: "Path"=None, suffix: str="copy") -> "Path":
         """Copies this file/folder to the given destination path.
@@ -232,7 +254,7 @@ class Path:
 
         return destination
 
-    def mkdirs(self) -> "Path":
+    def mkdirs(self) -> bool:
         """Creates a directory recursively. That means while making leaf
         directory if any intermediate-level directory is missing, this
         method will create them all.
@@ -246,13 +268,4 @@ class Path:
 
         return False
 
-    def touch(self) -> bool:
-        """Implement the touch feature for this Path
 
-        :return: True always.
-        :rtype: bool
-        """
-        with open(self._path, 'a'):
-            os.utime(self._path, None)
-
-        return True

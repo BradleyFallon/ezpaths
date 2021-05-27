@@ -3,7 +3,9 @@ import os
 import sys
 
 from .context import Path
+from datetime import datetime
 
+def timestamp(): return datetime.now().strftime("%y%m%d_%H%M%S")
 
 class TestPath(unittest.TestCase):
     def test_init_empty(self):
@@ -70,6 +72,46 @@ class TestPath(unittest.TestCase):
         path.to_sys()
         present_now = path in sys.path
         self.assertTrue(present_now and missing_before)
+
+    def test_touch(self):
+        fname = timestamp() + "_test_touch.txt"
+        path = Path() + fname
+        self.assertFalse(path.exists())
+        path.touch()
+        self.assertTrue(path.exists())
+        path.delete()
+
+    def test_delete(self):
+        fname = timestamp() + "_test_delete.txt"
+        path = Path() + fname
+        self.assertFalse(path.exists())
+        path.touch()
+        self.assertTrue(path.exists())
+        path.delete()
+        self.assertFalse(path.exists())
+
+    def test_rename(self):
+        fname_before = timestamp() + "_test_rename_before.txt"
+        fname_after = timestamp() + "_test_rename_before.txt"
+        path = Path() + fname_before
+        if path.exists():
+            # Was already taken, fail test
+            self.fail()
+        path.touch()
+        if not path.exists():
+            self.fail()
+        path_destination = Path() + fname_after
+        missing_before = path_destination.exists()
+        path_old = Path(str(path))
+        path.rename(fname_after)
+        present_now = path_destination.exists()
+        old_removed = path_old.exists()
+        path.delete()
+        print(path_destination)
+        print(path)
+        self.assertTrue(path_destination == path)
+        self.assertTrue(present_now)
+        self.assertTrue(old_removed)
 
 
 if __name__ == "__main__":
